@@ -1,0 +1,231 @@
+@charset "utf-8";
+@import "compass/css3/";
+
+// 基本フォント Noto Sans JP
+@import url("https://fonts.googleapis.com/css2?family=Caveat&family=Noto+Sans+JP:wght@400;500;700&display=swap");
+// @font-face {
+//   font-family: ;
+//   font-style: normal;
+//   src: url(../../font/) format("");
+//   font-display: swap;
+// }
+
+$breakpoints: (
+  "sp": "screen and (max-width: 896px)",
+  //"tab": "screen and (min-width: 1024px)",
+  "pc": "screen and (min-width: 897px)",
+) !default;
+
+@mixin bkp($breakpoint: sp) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+// @mixin bkp($breakpoint: tab) {
+//   @media #{map-get($breakpoints, $breakpoint)} {
+//     @content;
+//   }
+// }
+@mixin bkp($breakpoint: pc) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
+
+@mixin lineHeightCrop($line-height) {
+  &::before {
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top: calc((1 - #{$line-height}) * 0.5em);
+    content: "";
+  }
+  &::after {
+    display: block;
+    width: 0;
+    height: 0;
+    margin-bottom: calc((1 - #{$line-height}) * 0.5em);
+    content: "";
+  }
+}
+
+@mixin thumbHover() {
+  > div {
+    overflow: hidden;
+  }
+  img {
+    transition: transform 2.5s ease;
+  }
+  &:hover {
+    img {
+      transform: scale(1.2);
+    }
+  }
+}
+
+@mixin opacityHover() {
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+// @include lineHeightCrop(2);
+// @include lineHeightCrop(1.5);
+
+// @mixin mainheading($font-size:2rem ,$color: #000) {
+//   font-size: $font-size;
+//   color: $color;
+// }
+// @include mainheading($font-size:1.3rem ,$color: #929191);
+
+// keyframeベース
+// @keyframes animationName {
+// 	0% {}
+// 	50% {}
+// 	100% {}
+// }
+
+.en {
+  font-family: "Libre Caslon Text", sans-serif;
+}
+.fwm {
+  font-weight: 500;
+}
+.fwb {
+  font-weight: 700;
+}
+.tel {
+  &.no_link {
+    pointer-events: none;
+  }
+}
+
+.noto_serif {
+  font-family: "Noto Serif JP", serif;
+}
+
+.flx {
+  display: flex;
+  &.reverse {
+    flex-direction: row-reverse;
+  }
+  &.jfc_sb {
+    justify-content: space-between;
+  }
+  &.jfc_c {
+    justify-content: center;
+  }
+  &.aic {
+    align-items: center;
+  }
+  &.clm {
+    flex-direction: column;
+    & > * {
+      min-height: 0%;
+    }
+  }
+}
+.ablt {
+  position: absolute;
+}
+
+.afterarrow {
+  position: relative;
+  &::after {
+    content: "";
+    width: 18px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    right: -29px;
+    transform: translateY(-39%);
+  }
+  &.wht {
+    &::after {
+      background: url(../../img/common/arrow-wht.svg) no-repeat center;
+      background-size: 100%;
+    }
+  }
+  &.red {
+    &::after {
+      background: url(../../img/common/arrow-red.svg) no-repeat center;
+      background-size: 100%;
+    }
+  }
+  &.rightarw {
+    &::after {
+      width: 20px;
+      height: 12px;
+      transform: translateY(-89%);
+      right: 5px;
+    }
+  }
+}
+
+.red_txt {
+  color: $basered;
+}
+//基本本文
+.lead {
+  font-size: 1.4rem;
+  line-height: 2.1;
+  letter-spacing: 0.05em;
+  @include bkp(sp) {
+    text-align: justify;
+    text-justify: inter-ideograph;
+  }
+}
+.bg_btn {
+  background-color: $basered;
+  text-align: center;
+  display: block;
+  padding: 33px 0;
+  span {
+    font-size: 1.6rem;
+    color: #fff;
+  }
+}
+
+@mixin basebtn($font-size: 1.8rem, $width: 150px) {
+  font-size: $font-size;
+  width: $width;
+  letter-spacing: 0.05em;
+  color: $basered;
+  padding-bottom: 10px;
+  position: relative;
+  border-bottom: 2px solid #e3deb9;
+  display: block;
+}
+
+@mixin base_sub_head($font-size: 1.8rem, $padding-left: 40px, $width: 30px) {
+  font-size: $font-size;
+  color: $basered;
+  padding-left: $padding-left;
+  position: relative;
+  display: inline-block;
+  &::after {
+    content: "";
+    background-color: $basered;
+    width: $width;
+    height: 2px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+  }
+}
+
+//自動文字詰め
+//font-feature-settings: "palt";
+
+//縦書き（SPで解除）
+.vertical {
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: tb-rl;
+  -o-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+  @include bkp(sp) {
+    writing-mode: horizontal-tb;
+    -webkit-writing-mode: horizontal-tb;
+    -ms-writing-mode: horizontal-tb;
+  }
+}

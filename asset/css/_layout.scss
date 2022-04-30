@@ -1,0 +1,235 @@
+@charset "utf-8";
+@import "compass/css3/";
+
+.sp {
+  display: none;
+  @media screen and (max-width: 896px) {
+    display: block;
+  }
+}
+.pc {
+  @media screen and (max-width: 896px) {
+    display: none;
+  }
+}
+
+#stage {
+}
+
+.inner {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.outer {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  width: 100%;
+  position: fixed;
+  left: 0;
+  padding: 0 5%;
+  z-index: 100;
+  @include bkp(pc) {
+    top: 40px;
+  }
+  @include bkp(sp) {
+    top: 8px;
+  }
+  .header_inner {
+    .logo {
+      @include bkp(pc) {
+        width: 270px;
+      }
+      @include bkp(sp) {
+        position: relative;
+        z-index: 10002;
+        width: 60%;
+      }
+      a {
+        display: block;
+      }
+    }
+    .menuBtn {
+      @include bkp(pc) {
+        display: none;
+      }
+      @include bkp(sp) {
+        position: relative;
+        z-index: 10002;
+        width: 60px;
+        height: 60px;
+        &.close {
+          .bar {
+            &:first-child {
+              transform: translate(-50%, -50%) rotate(45deg);
+            }
+            &:nth-child(2) {
+              transform: translate(100%, -50%);
+              opacity: 0;
+            }
+            &:last-child {
+              transform: translate(-50%, -50%) rotate(-45deg);
+            }
+          }
+        }
+        .bar {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 40px;
+          height: 1px;
+          background-color: #000;
+          transition: transform 0.35s;
+          &:first-child {
+            transform: translate(-50%, -10px);
+          }
+          &:nth-child(2) {
+            transform: translate(-50%, -50%);
+          }
+          &:last-child {
+            transform: translate(-50%, 10px);
+          }
+        }
+      }
+    }
+    .nav {
+      @include bkp(pc) {
+        width: calc(100% - 270px);
+        margin-left: 5%;
+      }
+      @include bkp(sp) {
+        overflow-y: scroll;
+        position: fixed;
+        top: 0;
+        right: 0;
+        z-index: 10001;
+        transform: translate(100%, 0);
+        width: 100%;
+        height: 100%;
+        padding: 80px 0 0;
+        background-color: #fff;
+
+        transition: transform 0.35s;
+        &.on {
+          transform: translate(0, 0);
+        }
+      }
+      &__mainnav {
+        @include bkp(sp) {
+          padding: 20px 5%;
+          background-color: #188ea2;
+        }
+        ul {
+          justify-content: flex-end;
+          @include bkp(sp) {
+            display: block;
+          }
+          li {
+            &:not(:last-child) {
+              @include bkp(pc) {
+                margin-right: 30px;
+              }
+              @include bkp(sp) {
+                margin-bottom: 6px;
+              }
+            }
+
+            .parent_list {
+              font-size: 1.4rem;
+              display: block;
+              font-weight: 700;
+              letter-spacing: 0.04em;
+              @include bkp(pc) {
+                position: relative;
+                &::after {
+                  content: "";
+                  width: 0%;
+                  height: 2px;
+                  background-color: #000;
+                  position: absolute;
+                  bottom: -6px;
+                  left: 0;
+                  transition: 0.4s;
+                }
+                &:hover::after {
+                  width: 100%;
+                }
+              }
+              @include bkp(sp) {
+                padding: 22px 15px;
+                background-color: #fff;
+                font-size: 1.5rem;
+                &.nav_arrow {
+                  position: relative;
+                  &:before,
+                  &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    right: 15px;
+                    width: 14px;
+                    height: 2px;
+                    background-color: $basered;
+                    transition: transform 0.35s;
+                  }
+                  &:before {
+                    transform: translate(0, -50%);
+                  }
+                  &:after {
+                    transform: translate(0, -50%) rotate(90deg);
+                  }
+                  &.open {
+                    &:after {
+                      transform: translate(0, -50%) rotate(0);
+                    }
+                  }
+                }
+              }
+            }
+            &.contact_link {
+              a {
+                color: #fff;
+                font-size: 1.4rem;
+                font-weight: 700;
+                letter-spacing: 0.04em;
+                background-color: #188ea2;
+                @include bkp(pc) {
+                  padding: 11px 17px;
+                  position: relative;
+                  &::after {
+                    content: "";
+                    width: 0%;
+                    height: 2px;
+                    background-color: #fff;
+                    position: absolute;
+                    bottom: 8px;
+                    left: 16px;
+                    transition: 0.4s;
+                  }
+                  &:hover::after {
+                    width: 74%;
+                  }
+                }
+                @include bkp(sp) {
+                  padding: 16px 0;
+                  text-align: center;
+                }
+              }
+            }
+          }
+        }
+      }
+      &__contact {
+        @include bkp(pc) {
+          display: none;
+        }
+        @include bkp(sp) {
+        }
+      }
+    }
+  }
+}

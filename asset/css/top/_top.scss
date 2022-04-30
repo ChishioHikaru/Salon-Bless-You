@@ -1,0 +1,19 @@
+@charset "utf-8";
+@import "compass/css3/";
+
+.top {
+  #contents {
+    position: relative;
+    .first_view {
+      height: 100vh;
+      @include bkp(pc) {
+        background: url(../../img/common/fv@2x.png) no-repeat center;
+        background-size: cover;
+      }
+      @include bkp(sp) {
+        background: url(../../img/common/fv@2x.png) no-repeat center;
+        background-size: cover;
+      }
+    }
+  }
+}
