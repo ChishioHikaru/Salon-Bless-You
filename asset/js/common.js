@@ -197,15 +197,32 @@ function scrollAnimFunc() {
   });
 }
 
-//SP triggerクリックでメニュー展開
+//PC triggerクリックでメニュー展開
 function spMenuOpenFunc() {
+  var w = $(window).width();
   $(".trigger").click(function () {
     if ($(this).hasClass("close")) {
       $(".menu").removeClass("on");
+      $(".overlay").fadeOut();
       $(this).removeClass("close");
+      if (w > 897) {
+        $(".content").removeClass("ovf");
+      }
     } else {
       $(".menu").addClass("on");
+      $(".overlay").fadeIn();
       $(this).addClass("close");
+      if (w > 897) {
+        $(".content").addClass("ovf");
+      }
+    }
+  });
+  $(".overlay").click(function () {
+    $(".menu").removeClass("on");
+    $(".overlay").fadeOut();
+    $(".trigger").removeClass("close");
+    if (w > 897) {
+      $(".content").removeClass("ovf");
     }
   });
 }
@@ -239,39 +256,38 @@ function spBodyFixedFunc() {
 
 //ヘッダーにfv以降までスクロールで何らかの処理
 function headerAddEventFunc() {
-  if ($(".firstview").length) {
-    $(window).on("scroll", function () {
-      scr = $(window).scrollTop();
-      firstview = $(".firstview").offset().top;
-      winHeight = $(window).height();
-      if (scr > firstview + winHeight) {
-        $(".header").addClass("on");
-      } else {
-        $(".header").removeClass("on");
-      }
-    });
-  }
-}
-
-function factoryPopup(){
-  $('.js-popup-movie').on('click',function(){
-    $(this).next().addClass('open');
-    $('.virtual__overlay').fadeIn();
+  $(window).on("scroll", function () {
+    scr = $(window).scrollTop();
+    winHeight = $(window).height();
+    if (scr > winHeight) {
+      $(".header .nav").addClass("off");
+      $(".header .menuBtn").addClass("on");
+    } else {
+      $(".header .nav").removeClass("off");
+      $(".header .menuBtn").removeClass("on");
+    }
   });
 }
 
-function factoryPopupClose(){
-  $('.js-popup-color').on('click',function(){
-    $(this).parent().removeClass('open');
-    $('.virtual__overlay').fadeOut();
+function factoryPopup() {
+  $(".js-popup-movie").on("click", function () {
+    $(this).next().addClass("open");
+    $(".virtual__overlay").fadeIn();
   });
 }
 
-function scrollBusiness(){
-  if($('.business__mvchild').length){
+function factoryPopupClose() {
+  $(".js-popup-color").on("click", function () {
+    $(this).parent().removeClass("open");
+    $(".virtual__overlay").fadeOut();
+  });
+}
+
+function scrollBusiness() {
+  if ($(".business__mvchild").length) {
     $(window).on("scroll", function () {
       scr = $(window).scrollTop();
-      triggerWin = $(window).height()/2;
+      triggerWin = $(window).height() / 2;
       if (scr > triggerWin) {
         $(".business__mvchild").addClass("bulr");
       } else {
@@ -398,7 +414,7 @@ $(function () {
   tabContentFunc();
   scrollAnimFunc();
   spMenuOpenFunc();
-  spBodyFixedFunc();
+  // spBodyFixedFunc();
   headerAddEventFunc();
   showAccordionFunc();
   factoryPopup();
@@ -408,133 +424,133 @@ $(function () {
   //****************************
   // その他は要素の有無で個別で実装
   //****************************
-  if ($(".top").length) {
-    $(window).on("scroll", function () {
-      scr = $(window).scrollTop();
-      firstview = $(".firstview").offset().top;
-      winHeight = $(window).height();
-      if (scr > firstview + winHeight / 3) {
-        $(".rice_bg, .rice").addClass("blur");
-      } else {
-        $(".rice_bg, .rice").removeClass("blur");
-      }
-    });
-    $(".blog_tab li").on("click", function () {
-      index = $(".blog_tab li").index(this);
-      $(".blog_tab li").removeClass("active");
-      $(".blog_tab li").eq(index).addClass("active");
-      $(".blog_tab_block").removeClass("active");
-      $(".blog_tab_block").eq(index).addClass("active");
-    });
-    if ($(".ticker").length) {
-      var $setElm = $(".ticker");
-      var effectSpeed = 1000;
-      var switchDelay = 6000;
-      var easing = "swing";
+  // if ($(".top").length) {
+  //   $(window).on("scroll", function () {
+  //     scr = $(window).scrollTop();
+  //     firstview = $(".firstview").offset().top;
+  //     winHeight = $(window).height();
+  //     if (scr > firstview + winHeight / 3) {
+  //       $(".rice_bg, .rice").addClass("blur");
+  //     } else {
+  //       $(".rice_bg, .rice").removeClass("blur");
+  //     }
+  //   });
+  //   $(".blog_tab li").on("click", function () {
+  //     index = $(".blog_tab li").index(this);
+  //     $(".blog_tab li").removeClass("active");
+  //     $(".blog_tab li").eq(index).addClass("active");
+  //     $(".blog_tab_block").removeClass("active");
+  //     $(".blog_tab_block").eq(index).addClass("active");
+  //   });
+  //   if ($(".ticker").length) {
+  //     var $setElm = $(".ticker");
+  //     var effectSpeed = 1000;
+  //     var switchDelay = 6000;
+  //     var easing = "swing";
 
-      $setElm.each(function () {
-        var effectFilter = $(this).attr("rel"); // 'fade' or 'roll' or 'slide'
+  //     $setElm.each(function () {
+  //       var effectFilter = $(this).attr("rel"); // 'fade' or 'roll' or 'slide'
 
-        var $targetObj = $(this);
-        var $targetUl = $targetObj.children("ul");
-        var $targetLi = $targetObj.find("li");
-        var $setList = $targetObj.find("li:first");
+  //       var $targetObj = $(this);
+  //       var $targetUl = $targetObj.children("ul");
+  //       var $targetLi = $targetObj.find("li");
+  //       var $setList = $targetObj.find("li:first");
 
-        var ulWidth = $targetUl.width();
-        var listHeight = $targetLi.height();
-        $targetObj.css({ height: listHeight });
-        $targetLi.css({ top: "0", left: "0", position: "absolute" });
+  //       var ulWidth = $targetUl.width();
+  //       var listHeight = $targetLi.height();
+  //       $targetObj.css({ height: listHeight });
+  //       $targetLi.css({ top: "0", left: "0", position: "absolute" });
 
-        var liCont = $targetLi.length;
+  //       var liCont = $targetLi.length;
 
-        if (effectFilter == "fade") {
-          $setList
-            .css({ display: "block", opacity: "0", zIndex: "98" })
-            .stop()
-            .animate({ opacity: "1" }, effectSpeed, easing)
-            .addClass("showlist");
-          if (liCont > 1) {
-            setInterval(function () {
-              var $activeShow = $targetObj.find(".showlist");
-              $activeShow.animate(
-                { opacity: "0" },
-                effectSpeed,
-                easing,
-                function () {
-                  $(this)
-                    .next()
-                    .css({ display: "block", opacity: "0", zIndex: "99" })
-                    .animate({ opacity: "1" }, effectSpeed, easing)
-                    .addClass("showlist")
-                    .end()
-                    .appendTo($targetUl)
-                    .css({ display: "none", zIndex: "98" })
-                    .removeClass("showlist");
-                }
-              );
-            }, switchDelay);
-          }
-        } else if (effectFilter == "roll") {
-          $setList
-            .css({ top: "3em", display: "block", opacity: "0", zIndex: "98" })
-            .stop()
-            .animate({ top: "0", opacity: "1" }, effectSpeed, easing)
-            .addClass("showlist");
-          if (liCont > 1) {
-            setInterval(function () {
-              var $activeShow = $targetObj.find(".showlist");
-              $activeShow
-                .animate({ top: "-3em", opacity: "0" }, effectSpeed, easing)
-                .next()
-                .css({
-                  top: "3em",
-                  display: "block",
-                  opacity: "0",
-                  zIndex: "99",
-                })
-                .animate({ top: "0", opacity: "1" }, effectSpeed, easing)
-                .addClass("showlist")
-                .end()
-                .appendTo($targetUl)
-                .css({ zIndex: "98" })
-                .removeClass("showlist");
-            }, switchDelay);
-          }
-        } else if (effectFilter == "slide") {
-          $setList
-            .css({
-              left: ulWidth,
-              display: "block",
-              opacity: "0",
-              zIndex: "98",
-            })
-            .stop()
-            .animate({ left: "0", opacity: "1" }, effectSpeed, easing)
-            .addClass("showlist");
-          if (liCont > 1) {
-            setInterval(function () {
-              var $activeShow = $targetObj.find(".showlist");
-              $activeShow
-                .animate({ left: -ulWidth, opacity: "0" }, effectSpeed, easing)
-                .next()
-                .css({
-                  left: ulWidth,
-                  display: "block",
-                  opacity: "0",
-                  zIndex: "99",
-                })
-                .animate({ left: "0", opacity: "1" }, effectSpeed, easing)
-                .addClass("showlist")
-                .end()
-                .appendTo($targetUl)
-                .css({ zIndex: "98" })
-                .removeClass("showlist");
-            }, switchDelay);
-          }
-        }
-      });
-    }
-  }
+  //       if (effectFilter == "fade") {
+  //         $setList
+  //           .css({ display: "block", opacity: "0", zIndex: "98" })
+  //           .stop()
+  //           .animate({ opacity: "1" }, effectSpeed, easing)
+  //           .addClass("showlist");
+  //         if (liCont > 1) {
+  //           setInterval(function () {
+  //             var $activeShow = $targetObj.find(".showlist");
+  //             $activeShow.animate(
+  //               { opacity: "0" },
+  //               effectSpeed,
+  //               easing,
+  //               function () {
+  //                 $(this)
+  //                   .next()
+  //                   .css({ display: "block", opacity: "0", zIndex: "99" })
+  //                   .animate({ opacity: "1" }, effectSpeed, easing)
+  //                   .addClass("showlist")
+  //                   .end()
+  //                   .appendTo($targetUl)
+  //                   .css({ display: "none", zIndex: "98" })
+  //                   .removeClass("showlist");
+  //               }
+  //             );
+  //           }, switchDelay);
+  //         }
+  //       } else if (effectFilter == "roll") {
+  //         $setList
+  //           .css({ top: "3em", display: "block", opacity: "0", zIndex: "98" })
+  //           .stop()
+  //           .animate({ top: "0", opacity: "1" }, effectSpeed, easing)
+  //           .addClass("showlist");
+  //         if (liCont > 1) {
+  //           setInterval(function () {
+  //             var $activeShow = $targetObj.find(".showlist");
+  //             $activeShow
+  //               .animate({ top: "-3em", opacity: "0" }, effectSpeed, easing)
+  //               .next()
+  //               .css({
+  //                 top: "3em",
+  //                 display: "block",
+  //                 opacity: "0",
+  //                 zIndex: "99",
+  //               })
+  //               .animate({ top: "0", opacity: "1" }, effectSpeed, easing)
+  //               .addClass("showlist")
+  //               .end()
+  //               .appendTo($targetUl)
+  //               .css({ zIndex: "98" })
+  //               .removeClass("showlist");
+  //           }, switchDelay);
+  //         }
+  //       } else if (effectFilter == "slide") {
+  //         $setList
+  //           .css({
+  //             left: ulWidth,
+  //             display: "block",
+  //             opacity: "0",
+  //             zIndex: "98",
+  //           })
+  //           .stop()
+  //           .animate({ left: "0", opacity: "1" }, effectSpeed, easing)
+  //           .addClass("showlist");
+  //         if (liCont > 1) {
+  //           setInterval(function () {
+  //             var $activeShow = $targetObj.find(".showlist");
+  //             $activeShow
+  //               .animate({ left: -ulWidth, opacity: "0" }, effectSpeed, easing)
+  //               .next()
+  //               .css({
+  //                 left: ulWidth,
+  //                 display: "block",
+  //                 opacity: "0",
+  //                 zIndex: "99",
+  //               })
+  //               .animate({ left: "0", opacity: "1" }, effectSpeed, easing)
+  //               .addClass("showlist")
+  //               .end()
+  //               .appendTo($targetUl)
+  //               .css({ zIndex: "98" })
+  //               .removeClass("showlist");
+  //           }, switchDelay);
+  //         }
+  //       }
+  //     });
+  //   }
+  // }
 });
 
 // --- tips -----------------------------------------------
@@ -585,16 +601,18 @@ $(function () {
 //slickの基本処理（レスポンシブ）
 //****************************
 
-if($('.facility_slider').length){
-    $('.facility_slider').slick({
+if ($(".facility_slider").length) {
+  $(".facility_slider").slick({
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
     autoplaySpeed: 3000,
     arrows: true,
     //個別でarrowを追加
-    prevArrow: '<div class="slick-prev slick-arrow ablt"><img src="../asset/img/....." alt=""></div>',
-    nextArrow: '<div class="slick-next slick-arrow ablt"><img src="../asset/img/....." alt=""></div>',
+    prevArrow:
+      '<div class="slick-prev slick-arrow ablt"><img src="../asset/img/....." alt=""></div>',
+    nextArrow:
+      '<div class="slick-next slick-arrow ablt"><img src="../asset/img/....." alt=""></div>',
     // responsive: [
     //   {
     //     breakpoint: 896,
@@ -606,8 +624,6 @@ if($('.facility_slider').length){
     // ]
   });
 }
-
-
 
 //****************************
 //自動で流れるカルーセルスライダー
